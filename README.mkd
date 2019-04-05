@@ -2,9 +2,7 @@ This is a sample application for IoT SDK: [ebisu](https://github.com/KiiPlatform
 This sample updates temperature from sensor to kii cloud, and waiting command to turn on/off led.
 ## Used Hardware
 - Raspberry Pi Zero W Rev 1.1 (confirmed)
-- One Wire Digital Temperature Sensor - [DS18B20](http://osoyoo.com/2017/05/27/ds18b20-temperature-sensor/)
-- [full color RGB LED](http://osoyoo.com/2015/03/24/rgb-color-module-project/)
-
+- Humidity/Temperature sensor [DHT11 module](https://www.mouser.com/ds/2/758/DHT11-Technical-Data-Sheet-Translated-Version-1143054.pdf)
 ## Setup Pi
 Note: You should be already installed linux OS image to SD card of your Raspberry Pi.
 It is not the scope of this README about how to prepare a SD card.
@@ -59,39 +57,6 @@ screen /dev/cu.SLAB_USBtoUART 115200
   ```
 ### Pin numbering described in this README
 GPIO BCM Pi number is used. Please check this official document about [gpio of Raspberry Pi](https://www.raspberrypi.org/documentation/usage/gpio/)
-
-You can simply refer the GPIO number from the following image:
-![Image about GPIO pin of Pi](images/gpio-numbers-pi2.png)
-
-### setup and connect 1-wire digital temperature sensor
-Please check [this tutorial](https://www.waveshare.com/wiki/Raspberry_Pi_Tutorial_Series:_1-Wire_DS18B20_Sensor) to setup Pi.
-- Make sure signal pin of sensor connect to GPIO BCM 4 pin of Pi
-- Make sure GROUND pin of sensor connect to any GROUND pins of Pi
-- Make sure VCC pin of sensor connect to any 5V pins of Pi
-
-#### update pin number in source code to connected sensor
-Once 1-wire temperature sensor detected by Pi, there is a directory created to present this sensor.
-You can check by
-
-```
-ls /sys/bus/w1/devices
-```
-results like:
-```
-28-0416925607ff  w1_bus_master1
-```
-As above output, there is `28-***`. It is connceted DS18B20 sensor. Change `W1_FILE_NAME` in `pi_control.h` with the actual value in your Pi.
-Please note that, if there are more than one DS18B20 sensors connected to Pi. There are more than one that kind of folder existing.
-
-## connect full color led
-- Connect GROUND pin of led to any GROUND pin of Pi.
-- Connect RED/GREEN/BLUE pins to any GPIO BCM pin of pi.
-  In the sample, BLUE pin connect to GPIO BCM 13, RED pin connect to 19, and GREEN pin connect to 26
-
-If you connect RED/GREEN/BLUE to different pins, you need to change the following defines in `pi_control.h`.
-- BLUE_LED
-- RED_LED
-- GREEN_LED
 
 ## Build sample
 
